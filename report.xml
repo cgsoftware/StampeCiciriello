@@ -7,7 +7,7 @@
         <field name="type">ir.actions.report.xml</field>
         <field name="model">purchase_order</field>
         <field name="report_name">ordinefornitore</field>
-        <field name="report_rml">StampeJasper/report/Ordinef.jrxml</field>
+        <field name="report_rml">StampeCiciriello/report/Ordinef.jrxml</field>
         <field name="report_type">pdf</field>
         <field name="jasper_report">True</field>
         <field name="jasper_output">pdf</field>
@@ -18,7 +18,7 @@
         <field name="type">ir.actions.report.xml</field>
         <field name="model">sale_order</field>
         <field name="report_name">ordinecliente</field>
-        <field name="report_rml">StampeJasper/report/ordinec.jrxml</field>
+        <field name="report_rml">StampeCiciriello/report/ordinec.jrxml</field>
         <field name="report_type">pdf</field>
         <field name="jasper_report">True</field>
         <field name="jasper_output">pdf</field>

@@ -20,7 +20,7 @@
 #
 ##############################################################################
 {
-    'name': 'STAMPE PERSONALIZZATE CON JASPER REPORT',
+    'name': 'STAMPE DEGLI ORDINI REALIZZATE IN JASPER',
     'version': '0.1',
     'category': 'Localisation/Italy',
     'description': "Questo modulo aggiunge stampe personalizzate lanciando dei wizard parametrici che lanceranno poi la stampa di Jasper",
