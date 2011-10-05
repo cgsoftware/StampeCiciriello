@@ -22,31 +22,31 @@
         <field name="report_type">pdf</field>
         <field name="jasper_report">True</field>
         <field name="jasper_output">pdf</field>
-    </record>
- 	
- 	<record id="report_fattura_diff" model="ir.actions.report.xml">
-        <field name="name">Fattura Differita</field>
+	</record>
+
+
+	
+	<record id="report_ddt" model="ir.actions.report.xml">
+        <field name="name">DDT</field>
         <field name="type">ir.actions.report.xml</field>
-        <field name="model">italianfiscaldoc.header</field>
+        <field name="model">fiscaldocument.header</field>
+        <field name="report_name">DDT</field>
+        <field name="report_rml">StampeCiciriello/report/ddt.jrxml</field>
+        <field name="report_type">pdf</field>
+        <field name="jasper_report">True</field>
+        <field name="jasper_output">pdf</field>
+	</record>
+	
+	<record id="report_differita" model="ir.actions.report.xml">
+        <field name="name">fattdiff</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">fiscaldocument.header</field>
         <field name="report_name">fattdiff</field>
         <field name="report_rml">StampeCiciriello/report/fattdiff.jrxml</field>
         <field name="report_type">pdf</field>
         <field name="jasper_report">True</field>
         <field name="jasper_output">pdf</field>
 	</record>
-	
-	<record id="report_ddt" model="ir.actions.report.xml">
-		<field name="name">DDT</field>
-		<field name="type">ir.actions.report.xml</field>
-		<field name="model">italianfiscaldoc.header</field>
-		<field name="report_name">ddt</field>
-		<field name="report_rml">StampeCiciriello/report/ddt.jrxml</field>
-		<field name="report_type">pdf</field>
-        <field name="jasper_report">True</field>
-        <field name="jasper_output">pdf</field>	
-	</record>
- 
+
  </data>
- 
- 
 </openerp>

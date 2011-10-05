@@ -23,6 +23,7 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="prezzi" class="java.lang.Integer" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT
      fiscaldoc_header."agente" AS fiscaldoc_header_agente,
@@ -399,14 +400,14 @@ ORDER BY
 				<reportElement x="4" y="32" width="546" height="15"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="432" y="36" width="40" height="8"/>
+				<reportElement x="333" y="36" width="40" height="8"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="6" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Quantità]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="371" y="36" width="24" height="8"/>
+				<reportElement x="300" y="36" width="24" height="8"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="6" isBold="true" isItalic="true"/>
 				</textElement>
@@ -433,6 +434,20 @@ ORDER BY
 				</textElement>
 				<text><![CDATA[Codice	]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="387" y="36" width="40" height="8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Prezzo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="439" y="36" width="40" height="8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Sconto]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -447,22 +462,40 @@ ORDER BY
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{account_tax_description}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="366" y="0" width="24" height="10"/>
+					<reportElement x="295" y="0" width="24" height="10"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{product_uom_name}]]></textFieldExpression>
 				</textField>
+				<textField>
+					<reportElement x="439" y="0" width="40" height="10">
+						<printWhenExpression><![CDATA[$P{prezzi}.equals( 1 )]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{fiscaldoc_righe_discount_riga}]]></textFieldExpression>
+				</textField>
+				<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
+					<reportElement x="387" y="0" width="40" height="10">
+						<printWhenExpression><![CDATA[$P{prezzi}.equals( 1 )]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{fiscaldoc_righe_product_prezzo_unitario}]]></textFieldExpression>
+				</textField>
 			</frame>
 			<textField pattern="###0" isBlankWhenNull="true">
-				<reportElement x="432" y="0" width="40" height="10"/>
+				<reportElement x="333" y="0" width="40" height="10"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{fiscaldoc_righe_product_uom_qty}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="60" y="0" width="288" height="10"/>
+				<reportElement x="60" y="0" width="218" height="10"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>

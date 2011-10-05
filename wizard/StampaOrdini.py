@@ -11,13 +11,17 @@ from tools.translate import _
 
 
 class stampa_ordini(osv.osv_memory):
-    _inherit='stampa.ordini'
-   
-    
+    _name = 'stampa.ordini'
+    _description = 'funzioni stampa ordini jasper'
     _columns = {
+                'dadata': fields.date('Da Data Documento', required=True ),
+                'adata': fields.date('A Data Documento', required=True),
+                'danrv': fields.char('Da Documento',size=30,required=True),
+                'anrv': fields.char('A Documento',size=30,required=True),
+                'prezzi':fields.boolean('Stampo i prezzi e gli sconti sull''ordine?'),
                 'tipo': fields.selection(  (('O', 'Ordine Cliente'), ('P', 'Preventivo a Cliente')), 'Tipo di docuemento')
-          
-    }
+                }
+
     
     def _build_contexts(self, cr, uid, ids, data, context=None):
         if context is None:
@@ -29,16 +33,29 @@ class stampa_ordini(osv.osv_memory):
                     }
         var = data['form']['prezzi']
         #import pdb;pdb.set_trace()
-        if var == 1 and True:
+       
+    
+        if var is True or 1:
             result = {'danr':data['form']['danrv'],'anr':data['form']['anrv'],'dadata':data['form']['dadata'],
-                        'adata':data['form']['adata'], 'tipo':data['form']['tipo'], 'prezzi':1}
+                  'adata':data['form']['adata'], 'tipo':data['form']['tipo'], 'prezzi':1}
         else:
-            if var == 0 and False:
-                result ={'danr':data['form']['danrv'],'anr':data['form']['anrv'],'dadata':data['form']['dadata'],
-                        'adata':data['form']['adata'], 'tipo':data['form']['tipo'], 'prezzi':0}
-
+            result = {'danr':data['form']['danrv'],'anr':data['form']['anrv'],'dadata':data['form']['dadata'],
+                  'adata':data['form']['adata'], 'tipo':data['form']['tipo'], 'prezzi':0,}
         return result
-  
+      
+    def _print_report(self, cr, uid, ids, data, context=None):
+        #import pdb;pdb.set_trace()
+        if context is None:
+            context = {}
+        pool = pooler.get_pool(cr.dbname)
+        fatture = pool.get('sale.order')
+        active_ids = context and context.get('active_ids', [])
+        Primo = True
+        return {
+                'type': 'ir.actions.report.xml',
+                'report_name': 'ordinecliente',
+                'datas': data,
+            }
  
 
     def check_report(self, cr, uid, ids, context=None):
@@ -53,6 +70,33 @@ class stampa_ordini(osv.osv_memory):
         used_context = self._build_contexts(cr, uid, ids, data, context=context)
         data['form']['parameters'] = used_context
         return self._print_report(cr, uid, ids, data, context=context)
+    
+    def view_init(self, cr, uid, fields_list, context=None):
+        # import pdb;pdb.set_trace()
+        res = super(stampa_ordini, self).view_init(cr, uid, fields_list, context=context)
+
+        return res
+    
+             
+    def  default_get(self, cr, uid, fields, context=None):
+        #import pdb;pdb.set_trace()
+        pool = pooler.get_pool(cr.dbname)
+        Ordini = pool.get('sale.order')
+        active_ids = context and context.get('active_ids', [])
+        Primo = True
+        if active_ids:
+             for ordine in Ordini.browse(cr, uid, active_ids, context=context):
+                if Primo:
+                    Primo = False
+                    DtIni = ordine['date_order']
+                    NrIni = ordine['name']
+                    danr = ordine['id']
+                
+                DtFin = ordine['date_order']
+                NrFin = ordine['name']
+                anr = ordine['id']                
+        
+        return{'dadata':DtIni,'adata':DtFin,'danrv':NrIni,'anrv':NrFin}
   
 stampa_ordini()
 
